@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      body{
+        text-align: center;
+      }
+    </style>
+</head>
+<body>
+  <h1>1.</h1>
+    <form action="#" onSubmit=formsubmit(event)>
+          <p>
+            <label>Position:</label>
+            <select name="position">
+              <option>select position</option>
+              <option>Cashier</option>
+              <option>Manager</option>
+            </select>
+          </p>
+          <p>
+            <label>Type:</label>
+            <select name="type">
+              <option>select type</option>
+              <option>Hourly</option>
+              <option>Monthly</option>
+              <option>Daily</option>
+            </select>
+          </p>
+          <p>
+            <label>Availability:</label>
+            <select name="avail">
+              <option>are you available?</option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </p>
+          <button type='submit'>Submit</button>
+        </form>
+        <div id="pri"></div>
+  <h1>2.</h1>
+
+        <div>
+          <button onclick=printkeys()>Print keys</button>
+          <div id="keys"></div>
+        </div>
+  <h1>3.</h1>
+
+        <div>
+          <button onclick=printValues()>Print Value</button>
+          <div id="values"></div>
+        </div>
+  <h1>4.</h1>
+
+        <div>
+          <button onclick=createarr()>Create [key,value] pair array</button>
+          <div id="createarr"></div>
+        </div>
+  <h1>5.</h1>
+
+        <div>
+          <button onclick=food()>food object</button>
+          <div id="food"></div>
+        </div>
+  <h1>6.</h1>
+
+        <div>
+          <h4>see current employee object</h4>
+          <button onclick=see()>see</button>
+          <div id="see"></div>
+          <h4>click below to prevent changes in employee object</h4>
+          <button onclick=prevent()>Prevent employee</button>
+          <h4>now try to change employee object</h4>
+          <input id="typeof" placeholder="enter type"/>
+          <button onclick=update()>Update employee</button>
+          <div id="update"></div>
+        </div>
+</body>
+<script>
+  var emp ={}
+  var employee ={}
+  function formsubmit(event){
+    event.preventDefault();
+    emp = {
+      position: '',
+      type:'',
+      isAvailable:'',
+      showDetails:function(){
+        if(employee.isAvailable==='Yes')
+        return `<p>
+          <span>position:${employee.position}</span>
+          <span>type:${employee.type}</span>
+          <span>availability:${employee.isAvailable}</span>
+          </p>`
+          else return `<p>order not placed</p>`
+      }
+    }
+    employee = Object.create(emp)
+    employee.position = event.target.position.value
+    employee.type = event.target.type.value
+    employee.isAvailable = event.target.avail.value
+    let print = employee.showDetails()
+    document.getElementById('pri').innerHTML = print
+    console.log(emp)
+    console.log(employee)
+  }
+  function printkeys(){
+    console.log(employee)
+    let key =`<p>${Object.keys(employee).map((item)=>item)}</p>`
+    // console.log(key)
+    document.getElementById('keys').innerHTML = key
+  }
+  function printValues(){
+    let value = `<p>${Object.keys(employee).map((item)=>employee[item])}</p>`
+    document.getElementById('values').innerHTML = value
+  }
+  function createarr(){
+    let arr = Object.entries(employee)
+    console.log(arr)
+    let arr1 = `<p>[${arr.map((item)=>`[${item}]`)}]</p>`
+    document.getElementById('createarr').innerHTML = arr1
+  }
+  function food(){
+    let foods ={
+      restraunt:'',
+      location:'',
+      name:''
+    }
+    let food = Object.create(foods)
+    food.restraunt = 'amla'
+    food.location = 'gamla'
+    food.name = 'vimla'
+    let newObj = Object.assign(food,employee)
+    let arr =`<p>{${Object.keys(newObj).map((item)=>`${item}:${food[item]}`)}}</p>`
+    document.getElementById('food').innerHTML = arr
+  }
+  function see(){
+    let arr =`<p>{${Object.keys(employee).map((item)=>`${item}:${employee[item]}`)}}</p>`
+    document.getElementById('see').innerHTML = arr
+  }
+  function prevent(){
+    Object.freeze(employee)
+  }
+  function update(){
+    employee.type = document.getElementById('typeof').value
+    let arr =`<p>{${Object.keys(employee).map((item)=>`${item}:${employee[item]}`)}}</p>`
+    document.getElementById('update').innerHTML = arr
+  }
+</script>
+</html>
