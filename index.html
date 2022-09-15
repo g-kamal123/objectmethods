@@ -84,6 +84,8 @@
   var emp ={}
   var employee ={}
   function formsubmit(event){
+    if(event.target.avail.value!='Yes')
+    return
     event.preventDefault();
     emp = {
       position: '',
